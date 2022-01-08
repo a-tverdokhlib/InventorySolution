@@ -1,0 +1,23 @@
+_id,username,password,email,confirmed_at,is_enabled,send_tracking_emails_by_default,first_name,last_name,company,phone,role
+1,tim,$2b$12$fwQtDG6vI4RLa/fS8Q5L6uPS0cjNjdeCzyqzbmyz2eN5MbAWTJTxe,tim@ginn.ca,2018-01-01 00:00:00,0,1,,,My Company,1234567890,1
+2,demo,$2b$12$HI2G9MAXiC8nFEkTB2OTlOgC1h6ig3DtsfDknQV8mhH4pi0CSL1UK,demo@example.com,2018-01-01 00:00:00,0,1,,,Acme Ltd,123456789
+3,warehouse,$2b$12$D7lqNwpUagJ7ugR9gjuLi.5H5AC15fwZiw2HJdihYUF3LVN5lPnmK,kirby@prioritybiz.com,2018-01-01 00:00:00,1,1,Warehouse,User,PriorityBiz Operations,866-342-6733,2
+4,prioritybiz,$2b$12$mT22QIcKU8zIyTQYAF1bJ.sXkc.8k.bMZsTkvyplzf./mhhd/jSR2,ray@prioritybiz.com,2018-01-01 00:00:00,1,1,Ray,Castiglione,PriorityBiz,7168181016,1
+5,test,$2b$12$1HMpkg9VtaN41BSm7ADlJemV9nJd5H0ktJR30PI9AzC4/86Yab49W,rob@prioritybiz.com,2018-06-16 02:30:26,1,1,Test,User,Test Company,716-888-8888
+6,sholub1,$2b$12$qFc1iEVhAN20INd/EzlP0uiV.FBDc/nh7sc4pGiiyiPtgnGLTG872,steveholub@gmail.com,2018-06-16 02:40:49,1,1,Steve,Holub,Records On Walls,226-203-7495
+7,Artisano2321,$2b$12$oADCQYiomndxyBxdf45OUu6ave49lEkvoB3cXN2LcjZuctvIqcHby,info@ArtisanoDesigns.com,2018-06-16 02:44:06,1,1,Carm,Maesano,Artisano Designs,877-779-7972
+41,Yoga Health Store,$2b$12$my0m3jNv6Jjnq7IY9Zvipuj3kKpIaTc28bavBqn2QsBhKg61t4L16,mmmirand@roadrunner.com,2018-06-29 13:10:10,0,1,Mark,Mirand,Yoga Health Store,716-332-0518
+89,Furious1,$2b$12$6RAX5XHpWYusKlYJX0Eyx.TAa28/hpRQmoShsx/Z3n4plumTrlRL2,samantha@furiousfur.com,2018-09-09 15:21:40,1,1,Samantha,Madigan,FURious Fur,416-748-5000
+101,hearthcabinet247,$2b$12$SMvz4ohSRB3RPAP/tWlcx.FkWlnfznwZPADelGlPHCnkWjuAZ6b0S, sales@smokelesslog.com,2018-10-07 19:12:30,1,1,Scott,Schwartz,SmokelessLog,8663426733
+108,buffalovely,$2b$12$cKIC0Sdyhz4ITagSNREgJuTw5BuevqFNVbUdzxLlBLqTrrw.PCBCy,buffalovely716@gmail.com,2019-01-23 01:44:30,1,1,Amanda,Valentine,Buffalovely,7163320518
+116,Only944,$2b$12$cnzftt8ibebzslOec.QbtuUIGzbv4oPCRUtRCrR0ficrQ2oLCmQF.,Kyle@Only944.com,2019-02-14 02:11:08,1,1,Kyle,Yost,Only944,(619) 204-2646
+128,Buffalofoodproducts.com,$2b$12$hwgeSatiTB5SKv5/sW8eSeTto1SPUv1sy0c0cyRUszhv5m37jR2wK,info@buffalofoodproducts.com,2019-02-27 20:15:41,1,1,RJ,Castiglione,Buffalofoodproducts.com,7163320518
+202,logoprintnow,$2b$12$XdjREcRXOoDghs5Ekth2IuGREdRfcInu/.4LlkMEarjebteNb0iaO, info@logoprintnow.com,2019-09-30 22:04:14,1,1,Shipping,Department,LogoPrintNow.com,7165803013
+222,sandras247,$2b$12$pI8bWrFb0aYsP2D.fgBw8ex83gymhD0F.J3pkK4LJVNf73E9gOntm,sandy@empretty.com,2019-12-06 22:04:56,1,1,Sandra,Schoellkopf,EM Pretty,7163320518
+230,LivePerson,$2b$12$eeQflKtWM8UxnU9cS6KqPOB1YGEgnHeHS.S2ut3mM/Lt3PlbJAThu,stacey@logomotiongroup.com,2020-05-27 17:37:21,1,1,Stacey,Lewis,LivePerson,7163320518
+247,Previcare,$2b$12$tYc5oP9bnGbVoJDIe2v0POp5oZN8FOpiqKo2gb3Cq36rSuEXNxqTy,Lance@previcare.ca,2020-06-12 12:14:39,1,1,Lance ,Mcintosh,Previcare,855-802-6461
+254,ankur,$2b$12$8gMuNFZfHpyL49SkMSq6suezMZud6zzWj/Cj9elQ1lHunkUqJ1tKG,hello@anks.in,2020-06-19 00:00:00,0,1,,,Ankur Singh,+919717193630,1
+257,generalassembly,$2b$12$Ed6Yb6XCRIbtQUENtcPmd..v.GAy2M4qXj.N4DcfCLKxxgp89xBti,LAURA@HARPERANDSCOTT.COM,2020-07-13 16:48:37,1,1,LAURA,LULIANO,GENERAL ASSEMBLY,8444427737
+274,tanushsoftware87,$2b$12$9z/DkRsa6pb02GDhqvmZ.ew5O4uAKnn88JhsaerP1KmkTBYowf/Jq,tanushsoftware87@gmail.com,2021-03-26 04:39:22,1,0,tanushsoftware87,tanushsoftware87,tanushsoftware87,7874353439
+280,Test2,$2b$12$PnNKuy9R7ay5JKXkMvLNtetmLPMzTOqgqK3NnPcz2SNpDbdmphN/q,rob2131@prioritybiz.com,2021-03-26 04:44:02,0,0,Test,Account2,Test Account,888-888-8888
+281,Test3,$2b$12$n5XMsoykeLLlymhDtRpgYeZQCt3Yv0EPTu8rPvJ5X9jc3.o/lhHNC,test@test3.com,2021-04-18 22:50:52,0,0,Test,Test3,3 Test,7168008000

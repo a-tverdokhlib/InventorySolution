@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+</head>
+
+<body style="font-family: sans-serif; font-weight: 400;">
+    <div class="container">
+        <p>Please note that this message was sent from a notification-only email address that cannot accept incoming
+            mail. Please do not respond to this email.</p>
+        <p>Dear <strong style="text-transform: capitalize;">
+                <%=order.recipient.contact%>
+            </strong></p>
+        <p>Thanks again for your <%=blind_company%>.</p>
+        <p>We're pleased to inform you that your order will ship today with the following item(s):</p>
+        <ul style="list-style: none;">
+            <%lineItem.forEach(i=>{%>
+                <li><strong>Item #: </strong>
+                    <%=i.item.number%>
+                </li>
+                <li><strong>Item: </strong>
+                    <%=i.item.name%>
+                </li>
+                <li><strong>Description: </strong>
+                    <%=i.item.description%>
+                </li>
+                <li><strong>Item Qty :</strong>
+                    <% if (i.quantity_cases> 0){%>
+                        <%=i.quantity_cases%> Case(s)
+                            <% }else if(item.quantity_units > 0){%>
+
+                            <%=item.quantity_units%> Unit(s) 
+                        <%}%>
+                </li>
+
+                <%})%>
+
+        </ul>
+        <p><strong>Shipping Information: </strong><%=order.actual_carrier%>  <%=order.actual_service%> <br>
+            <strong>Tracking Information: </strong> <%=order.tracking%>
+        </p>
+        <p>Your shipment will be sent to the following address:</p>
+        <p>
+            <%=order.recipient.contact%>,  <%=order.recipient.name%>
+            <%=order.recipient.street1%>,
+            <%=order.recipient.city%>, <%=order.recipient.state%>, <%=order.recipient.postal%>
+
+        </p>
+        <p>If there are any items in your order that are not shipped today, you will receive a similar email
+            notification when they do ship. <br>
+
+            If you have any further questions regarding shipping, order status, or payment please contact customer
+            service at <%=order.user.email%>. <br>
+
+            We appreciate your business.</p>
+        <p>Sincerely,</p>
+        <p><%=order.user.first_name%>  <%=order.user.last_name%>, The Customer Service Team</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+Transaction ID,Item,Unit of Measure,Quantity,Insured Value,Carrier,Shipping Method,Contact Name,Phone,Address 1,City, State Code,Zip,Country Code,Company Name,Email
+5545,12345678987456321,C,20,1,car,ship,contact name,01144930551,adress,suex,2,122545,5145,comp
+5545,12345678987456321,C,50,1,car,ship,contact name,01144930551,adress,suex,2,122545,5145,comp,m@a.com
+500,12345678987456321,C,50,1,car,ship,contact name,01144930551,adress,suex,2,122545,5145,comp,m@a.com
+500,12345678987456321,U,50,1,car,ship,contact name,01144930551,adress,suex,2,122545,5145,comp,m@a.com
+500,12345678987456321,U,50,1,car,ship,contact name,01144930551,adress,suex,2,122545,5145,comp,m@a.com

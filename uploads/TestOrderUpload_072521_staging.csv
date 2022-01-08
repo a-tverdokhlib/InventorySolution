@@ -1,0 +1,4 @@
+Transaction ID,Item,Unit of Measure,Quantity,Insured Value,Carrier,Shipping Method,Company Name,Contact Name,Phone,Email,Address 1,Address 2,City,State Code,Zip,Country Code,Residential,Signature Option,Blind Shipper Name,Blind Shipper Phone
+072521-1,8114358331,U,20,,FedEx,FEDEXGROUND,Company Name,Rob Customer,716-999-9999,rob@prioritybiz.com,300 Airborne Pkwy,Suite 850,Staten Island,NY,10314,US,,,,
+072521-2,88888,U,1,,FedEx,FEDEX2DAY,,Person B,716-999-9999,rob@prioritybiz.com,145 Gruner Rd,Suite 100,Cheektowaga,NY,14225,US,,Y,The Store,888-888-888
+072521-3,55555,U,2,,FedEx,FEDEXGROUND,,Ray C,555-555-5555,ray@prioritybiz.com,6 Tarryton Court,,Monroe,OH,45050,US,,,,
