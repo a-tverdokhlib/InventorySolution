@@ -18,6 +18,7 @@ const User = require("../models/user");
 // n();
 
 exports.postLogin = async (req, res, next) => {
+
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -39,6 +40,12 @@ exports.postLogin = async (req, res, next) => {
       if (!user) {
         const error = new Error("user not found");
         error.statusCode = 404;
+        throw error;
+      }
+
+      if(!user.is_enabled) {
+        const error = new Error("user not active");
+        error.statusCode = 401;
         throw error;
       }
       const isEqual = await bcrypt.compare(password, user.password);

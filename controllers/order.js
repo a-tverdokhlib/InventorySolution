@@ -281,7 +281,7 @@ exports.postSelectShipMethod = async (req, res, next) => {
             order = await Order.findById(orderId)
                 .populate({
                     path: 'user',
-                    select: 'username company phone'
+                    select: 'username company phone email'
                 })
                 .populate({
                     path: 'recipient',
@@ -289,7 +289,7 @@ exports.postSelectShipMethod = async (req, res, next) => {
         } else {
             order = await Order.findOne({ _id: orderId, user: req.userId }).populate({
                 path: 'user',
-                select: 'username company phone'
+                select: 'username company phone email'
             }).populate({
                 path: 'recipient',
             });
@@ -344,6 +344,7 @@ exports.postSelectShipMethod = async (req, res, next) => {
             country: 'US',
             company: 'PriorityBiz',
             phone: '18663426733',
+            email:'test@gmail.com'
         });
         await warehouse.save()
         const to_address = new api.Address({
@@ -354,7 +355,8 @@ exports.postSelectShipMethod = async (req, res, next) => {
             state: order.recipient.state,
             zip: order.recipient.postal,
             phone: order.recipient.phone,
-            country: order.recipient.country
+            country: order.recipient.country,
+            email: order.recipient.email
         });
         await to_address.save()
 
@@ -471,9 +473,6 @@ exports.postPickRate = async (req, res, next) => {
         if (requested_carrier && requested_service) {
             order.requested_carrier = requested_carrier;
             order.requested_service = requested_service;
-
-
-
         }
         order.signature_option = signature_option;
         if (customer_reference) order.customer_reference = customer_reference;
@@ -483,6 +482,7 @@ exports.postPickRate = async (req, res, next) => {
         if (additionally_notify) order.additionally_notify = additionally_notify;
         if (insurance_value) order.insurance_value = insurance_value;
         if (signature_option) order.signature_option = signature_option;
+        order.status = 1;
         await order.save();
 
         if (order.insurance_value) {
@@ -531,6 +531,7 @@ exports.postShip = async (req, res, next) => {
         let shipments = [];
 
 
+        console.time("validation");
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -540,6 +541,11 @@ exports.postShip = async (req, res, next) => {
             throw error;
         }
 
+        console.timeEnd("validation");
+
+
+        console.time("OrderUpdate");
+        
         if (req.userRole == 'superadmin' || req.userRole == 'warehouse') {
             order = await Order.findById(orderId)
                 .populate({
@@ -649,10 +655,17 @@ exports.postShip = async (req, res, next) => {
             }
         }
 
+        console.timeEnd("OrderUpdate");
+
+
+        console.time('ShippingTotalTime');
+
         let total_weight = 0;
         let total_packages = split_packages.length;
 
         let shipments2 = shipments;
+
+        console.time('SplitPackage');
 
         split_packages.forEach(ele => {
             total_weight = total_weight + ele[1];
@@ -663,6 +676,11 @@ exports.postShip = async (req, res, next) => {
             shipments2.push({ parcel: { weight: ele[1] * 16 }, options: options })
 
         });
+        console.timeEnd('SplitPackage');
+
+
+        console.time('Warehousing');
+
         let company = 'PriorityBiz';
         let phone = '18663426733';
 
@@ -682,6 +700,10 @@ exports.postShip = async (req, res, next) => {
             phone: phone,
         });
         await warehouse.save()
+        console.timeEnd('Warehousing');
+
+        console.time('Toaddressing');
+
         const to_address = new api.Address({
             company: order.recipient.contact + " " + order.recipient.name,
             street1: order.recipient.street1,
@@ -693,6 +715,9 @@ exports.postShip = async (req, res, next) => {
             country: order.recipient.country
         });
         await to_address.save();
+        console.timeEnd('Toaddressing');
+
+        console.time('ShipSaving');
         let ship;
         let ship2;
         if (order.requested_service == 'FedExMediumBox' || order.requested_service == 'FedExSmallBox'
@@ -714,7 +739,9 @@ exports.postShip = async (req, res, next) => {
             reference: order.customer_reference
         });
         await ship.save();
+        console.timeEnd('ShipSaving');
 
+        
 
         let rates = ship.rates;
         rates.forEach(rate => {
@@ -736,6 +763,9 @@ exports.postShip = async (req, res, next) => {
         }
         const carrier_error_messages = ship.messages;
         await order.save();
+
+        console.timeEnd('ShippingTotalTime');
+
 
         res.status(200).json({
             state: 1,
@@ -764,6 +794,7 @@ exports.postShip = async (req, res, next) => {
 exports.postDoShip = async (req, res, next) => {
     try {
 
+        console.time('Validation');
         const orderId = req.body.orderId;
         const actual_service = req.body.actual_service;
         const actual_carrier = req.body.actual_carrier;
@@ -774,6 +805,7 @@ exports.postDoShip = async (req, res, next) => {
 
         let order;
         let ship = false;
+
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             const error = new Error("validation faild");
@@ -781,12 +813,14 @@ exports.postDoShip = async (req, res, next) => {
             error.data = errors.array();
             throw error;
         }
+        console.timeEnd('Validation');
 
+        console.time('OrderUpdate');
         if (req.userRole == 'superadmin' || req.userRole == 'warehouse') {
             order = await Order.findById(orderId)
                 .populate({
                     path: 'user',
-                    select: 'username company first_name email'
+                    select: 'username company first_name email phone'
                 })
                 .populate({
                     path: 'recipient',
@@ -794,7 +828,7 @@ exports.postDoShip = async (req, res, next) => {
         } else {
             order = await Order.findOne({ _id: orderId, user: req.userId }).populate({
                 path: 'user',
-                select: 'username company first_name email'
+                select: 'username company first_name email phone'
             }).populate({
                 path: 'recipient',
             });
@@ -816,6 +850,11 @@ exports.postDoShip = async (req, res, next) => {
             throw error;
         }
         order = await utils.updateOrder(req, order);
+        
+        console.timeEnd('OrderUpdate');
+
+
+        console.time('Shipping');
         order.status = 2;
         order.actual_carrier = actual_carrier;
         order.actual_service = actual_service;
@@ -850,7 +889,9 @@ exports.postDoShip = async (req, res, next) => {
             }
 
             if (order.actual_carrier && order.actual_service) {
+
                 if (order.actual_carrier.toUpperCase() == 'FEDEX') {
+
                     if (order.actual_service == 'FEDEX_EXPRESS_SAVER') {
                         options.bill_third_party_account = '308754227';
                         options.bill_third_party_country = 'US';
@@ -930,6 +971,11 @@ exports.postDoShip = async (req, res, next) => {
                     }
                 });
 
+                console.log('Shipping Address Started');
+                console.log('From Address=>', old_ship.from_address);
+                console.log('To Address=>', old_ship.to_address);
+                console.log('Shipments=>', new_shipments);
+                console.log('Reference=>', order.customer_reference);
                 ship = new api.Order({
                     to_address: old_ship.to_address,
                     from_address: old_ship.from_address,
@@ -937,6 +983,9 @@ exports.postDoShip = async (req, res, next) => {
                     reference: order.customer_reference
                 });
                 await ship.save();
+                console.log('Shipping Address Done');
+
+
                 order.easypost_order_id = ship.id;
                 await ship.buy(actual_carrier, actual_service);
                 order.shipping_cost = ship.shipments[0].selected_rate.rate;
@@ -962,7 +1011,7 @@ exports.postDoShip = async (req, res, next) => {
 
         } else {
             if (!tracking) {
-                const error = new Error('traking is required in manual rate');
+                const error = new Error('tracking is required in manual rate');
                 error.statusCode = 422;
                 throw error;
             }
@@ -970,12 +1019,18 @@ exports.postDoShip = async (req, res, next) => {
         }
 
         await order.save();
+        console.timeEnd('OrderUpdate');
 
+        console.log('Emailing');
+        
         //send emails
         if (order.notify_recipient) {
             let fromName = '';
             if (order.blind_company) fromName = order.blind_company;
             else if (order.user.company) fromName = order.user.company;
+
+            console.log('Notify_Recipient=>',order.recipient.email);
+            console.log('From=>',fromName);
             const message = await email(order.recipient.email, fromName, order, ship, lineItem);
         }
 
@@ -983,10 +1038,12 @@ exports.postDoShip = async (req, res, next) => {
             let fromName = '';
             if (order.blind_company) fromName = order.blind_company;
             else if (order.user.company) fromName = order.user.company;
+            console.log('Additional Notify=>',order.additionally_notify);
+            console.log('From=>',fromName);
+
             const message = await email(order.additionally_notify, fromName, order, ship, lineItem);
         }
-
-
+        console.timeEnd('Emailing');
 
         res.status(201).json({
             state: 1,
@@ -1043,9 +1100,9 @@ exports.getOrders = async (req, res, next) => {
         let dataRangeStart = req.query.dataRangeStart || false;
         let dataRangeEnd = req.query.dataRangeEnd || false;
 
-        const recipent = req.query.recipent ;
-        const customerTransaction = req.query.customerTransaction;
-        const traking = req.query.traking;
+        const recipent = req.query.recipent || '';
+        const customerTransaction = req.query.customerTransaction || '';
+        const tracking = req.query.tracking || '';
 
         let enableDateFilter = true;
 
@@ -1081,10 +1138,10 @@ exports.getOrders = async (req, res, next) => {
                 recipient: { $in: resIds }
             }
 
-        } if (traking) {
+        } if (tracking) {
             enableDateFilter = false;
 
-            // const reci = await Resipent.find({ tracking: new RegExp(traking.trim(), 'i'), user: req.userId })
+            // const reci = await Resipent.find({ tracking: new RegExp(tracking.trim(), 'i'), user: req.userId })
             //     .select('_id');
             // reci.forEach(i => {
             //     resIds.push(
@@ -1093,11 +1150,12 @@ exports.getOrders = async (req, res, next) => {
             // });
             find = {
                 ...find,
-                tracking: traking
+                tracking: tracking
             }
         }
 
         if (enableDateFilter) {
+
             if (dataRangeStart && dataRangeEnd) {
                 dataRangeStart = new Date(dataRangeStart);
                 dataRangeEnd = new Date(dataRangeEnd);
@@ -1127,6 +1185,7 @@ exports.getOrders = async (req, res, next) => {
                 }
 
             } else if (!dataRangeStart && !dataRangeEnd) {
+
                 find = {
                     user: req.userId,
                 };

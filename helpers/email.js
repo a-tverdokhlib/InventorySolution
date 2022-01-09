@@ -13,6 +13,7 @@ const transport = nodemailer.createTransport({
     }
 });
 
+console.log('Transport=>',transport);
 
 module.exports = async (to, fromName, order, ship, lineItem) => {
     try {
@@ -30,6 +31,8 @@ module.exports = async (to, fromName, order, ship, lineItem) => {
             lineItem:lineItem
         });
         
+        console.log('Message FROM =>', process.env.EMAIL_SENDER + ` ${fromName}`);
+        console.log('Message TO =>', to);
 
         const message = await transport.sendMail({
             to: to,

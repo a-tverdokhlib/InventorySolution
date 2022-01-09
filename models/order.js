@@ -31,7 +31,7 @@ const orderSchema = new schema({
     },
     status:{
         type:Number,
-        default:1
+        default:0
         
     },
     requested_carrier:{

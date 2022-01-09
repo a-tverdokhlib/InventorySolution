@@ -26,7 +26,7 @@ exports.getHome = async (req, res, next) => {
                         { createdAt: { $gt: dataRangeStart } },
                         { createdAt: { $lt: dataRangeEnd } },
                     ],
-                    status: 1,
+                    status: [0,1],
 
                 }
             } else if (dataRangeStart && !dataRangeEnd) {
@@ -34,7 +34,7 @@ exports.getHome = async (req, res, next) => {
 
                 find = {
                     createdAt: { $gt: dataRangeStart },
-                    status: 1,
+                    status: [0,1],
                 }
 
             } else if (!dataRangeStart && dataRangeEnd) {
@@ -42,17 +42,17 @@ exports.getHome = async (req, res, next) => {
 
                 find = {
                     createdAt: { $lt: dataRangeEnd },
-                    status: 1,
+                    status: [0,1],
                 }
 
             } else if (!dataRangeStart && !dataRangeEnd) {
                 find = {
-                    status: 1,
+                    status: [0,1],
                 };
             }
         } else {
             find = {
-                status: 1,
+                status: [0,1],
                 user: req.userId,
             }
 

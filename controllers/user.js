@@ -60,12 +60,6 @@ exports.postAddUpdate = async (req, res, next) => {
 
                 user.email = email;
             } if (phone) {
-                const isHere = await User.findOne({ phone: phone, _id: { $ne: user._id } })
-                if (isHere) {
-                    const error = new Error("You cannot add a new user with the same phone as an existing user");
-                    error.statusCode = 409;
-                    throw error;
-                }
 
                 user.phone = phone;
             } if (companyName) {
